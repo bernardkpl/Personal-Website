@@ -6,9 +6,17 @@
   <title>Bernard Lui — About Me</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="framed">
+  <!-- Drawing-sheet border: rulers aligned to the background grid (zones filled in by nav.js) -->
+  <div class="page-frame" aria-hidden="true">
+    <div class="ruler ruler-top"><div class="ruler-track"></div></div>
+    <div class="ruler ruler-bottom"><div class="ruler-track"></div></div>
+    <div class="ruler ruler-left"><div class="ruler-track"></div></div>
+    <div class="ruler ruler-right"><div class="ruler-track"></div></div>
+  </div>
+
   <nav>
-    <a class="logo" href="index.html">Bernard Lui</a>
+    <a class="logo" href="index.html">Bernard Lui's Engineering Portfolio</a>
     <ul>
       <li><a class="active" href="index.html">About</a></li>
       <li class="dropdown">
@@ -25,19 +33,66 @@
   </nav>
 
   <section class="slide">
-    <div class="slide-inner">
-      <div class="avatar" role="img" aria-label="Headshot of Bernard Lui"></div>
-      <div>
-        <h1>Bernard Lui</h1>
-        <ul class="contact">
-          <li>📍 San Francisco, CA</li>
-          <li>🎓 UC San Diego</li>
-          <li>✉️ <a href="mailto:bernardkpl1016@gmail.com">bernardkpl1016@gmail.com</a></li>
-          <li>🔗 <a href="www.linkedin.com/in/bernard-kpl" target="_blank" rel="noopener">LinkedIn</a></li>
-        </ul>
-        <div class="cta">
-          <a class="btn primary" href="#projects">See my work</a>
-          <a class="btn" href="file:///Users/bernardkpl/Downloads/Bernard%20Lui's%20Resume%20-%2004-10-2026.pdf" target="_blank" rel="noopener">Resume</a>
+    <div class="sheet">
+      <div class="sheet-body">
+        <div class="view">
+          <div class="avatar" role="img" aria-label="Headshot of Bernard Lui"></div>
+          <p class="view-label"><strong>VIEW A</strong>HEADSHOT · SCALE 1:1</p>
+        </div>
+
+        <div class="notes">
+          <p class="notes-head">Notes:</p>
+          <ol>
+            <li>Scroll for coursework, skills, experience and projects.</li>
+            <li>Resume available from the title block below.</li>
+          </ol>
+        </div>
+
+        <div class="title-block">
+          <div class="tb-cell tb-name">
+            <span class="tb-label">Title / Name</span>
+            <h1>Bernard Lui</h1>
+          </div>
+          <div class="tb-cell tb-half">
+            <span class="tb-label">Location</span>
+            <span class="tb-value">San Francisco, CA</span>
+          </div>
+          <div class="tb-cell tb-half">
+            <span class="tb-label">School</span>
+            <span class="tb-value">UC San Diego</span>
+          </div>
+          <div class="tb-cell tb-wide">
+            <span class="tb-label">Email</span>
+            <a class="tb-value" href="mailto:bernardkpl1016@gmail.com">bernardkpl1016@gmail.com</a>
+          </div>
+          <div class="tb-cell tb-link">
+            <span class="tb-label">LinkedIn</span>
+            <a class="tb-value" href="www.linkedin.com/in/bernard-kpl" target="_blank" rel="noopener">Profile ↗</a>
+          </div>
+          <div class="tb-cell">
+            <span class="tb-label">Dwg No.</span>
+            <span class="tb-value">BL-001</span>
+          </div>
+          <div class="tb-cell">
+            <span class="tb-label">Rev</span>
+            <span class="tb-value">A.1</span>
+          </div>
+          <div class="tb-cell">
+            <span class="tb-label">Scale</span>
+            <span class="tb-value">1:1</span>
+          </div>
+          <div class="tb-cell">
+            <span class="tb-label">Sheet</span>
+            <span class="tb-value">1 of 1</span>
+          </div>
+          <a class="tb-cell tb-half tb-action primary" href="#projects">
+            <span class="tb-label">Projects</span>
+            <span class="tb-value">See my work ↓</span>
+          </a>
+          <a class="tb-cell tb-half tb-action" href="file:///Users/bernardkpl/Downloads/Bernard%20Lui's%20Resume%20-%2004-10-2026.pdf" target="_blank" rel="noopener">
+            <span class="tb-label">Resume</span>
+            <span class="tb-value">Open PDF ↗</span>
+          </a>
         </div>
       </div>
     </div>
