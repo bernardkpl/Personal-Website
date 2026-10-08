@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Front and Rear Wing Design — Bernard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <a class="logo" href="index.html">Bernard Lui's Portfolio</a>
+    <ul>
+      <li><a href="index.html">About</a></li>
+      <li class="dropdown">
+        <button class="dropdown-toggle active" aria-haspopup="true" aria-expanded="false">Triton Racing Projects ▾</button>
+        <ul class="dropdown-menu">
+          <li><a class="active" href="project1.html">Front and Rear Wing Design</a></li>
+          <li><a href="project1b.html">Wing Spar Design</a></li>
+          <li><a href="project1c.html">Rocker Suspension Design</a></li>
+        </ul>
+      </li>
+      <li><a href="project2.html">Project Two</a></li>
+      <li><a href="others.html">Others</a></li>
+    </ul>
+  </nav>
+
+  <main class="project">
+    <p class="eyebrow">Project / Experience</p>
+    <h1>Front and Rear Wing Design</h1>
+
+    <div class="meta">
+      <div><strong>When</strong>Jun 2025 - Jan 2026</div>
+      <div><strong>Tools</strong>Tool A, Tool B, Tool C</div>
+    </div>
+
+    <h2>Skills</h2> 
+      <ul class="skills">
+        <li>Relevant skill one</li>
+        <li>Relevant skill two</li>
+        <li>Relevant skill three</li>
+        <li>Relevant skill four</li>
+    </ul>
+
+    <img class="hero-img" src="tr26_aero_package.png" alt="CAD render of the TR-26 aero package: rear wing assembly at the top right and front wing assembly at the bottom">
+
+    <h2>Project Description</h2>
+    <p>Triton Racing's switch from an IC engine to an electric powertrain shifted the car's 
+      weight distribution rearward, so for TR-26, a clean sheet design of the front and rear wing 
+      package was required to keep the car balanced. 
+      As the lead aerodynamics engineer, I was responsible for steering the design of the aerodynamic
+      package, ensuring it met the aerodynamic performance targets.
+    </p>
+
+    <h2>Main Objectives/Design Criteria</h2>
+    <ul>
+      <li>FSAE rules compliant
+        <ul>
+          <li>Quantitative stiffness goal. (&lt;0.25in deflection)</li>
+          <li>Front wing mounts must shear off on impact.</li>
+        </ul>
+      </li>
+      <li>Aerodynamic effectiveness
+        <ul>
+          <li>CL of &gt;1.7, CD of &lt;0.3, based on TR-24’s performance data.</li>
+          <li>Aero balance to ensure center of pressure lies slightly behind CG.</li>
+        </ul>
+      </li>
+      <li>Aero package must be lightweight. (&lt;15lbs)</li>
+      <li>Simple geometry, design for manufacturability.</li>
+      <li>Minimise Cost and materials.</li>
+    </ul>
+
+    <h2>Initial Design Thoughts - Airfoil Selection</h2>
+    <p>I first used Airfoiltools.com and Xfoil for very preliminary research and comparison
+      beteween various high-lift airfoils. As this was our first attempt at building an EV race
+      car, our car would be very power-limited, so more focus was placed on choosing an airfoil
+      with a high lift coefficient.
+    </p>
+
+    <h3>Compare airfoils using aerodynamic data from Airfoiltools.com and Xfoil</h3>
+    <figure class="figure">
+      <img src="airfoil_selection.png" alt="CL vs AoA, CD vs AoA, CL vs CD and efficiency vs 
+      AoA curves comparing the E423, NACA4412, FX63-137, S1223 and Fx74-140 airfoils">
+      <figcaption>Figure 1: Airfoil comparison — CL, CD, efficiency versus angle of attack, and 
+        aerodynamic efficiency plots.</figcaption>
+    </figure>
+
+    <h2>2D CFD</h2>
+    <p>I started with 2D CFD on the chosen airfoils, performing an iterative preliminary study
+      on the 2D front and rear wing geometry to:</p>
+    <ul>
+      <li>Minimise flow separation, especially at the second and third wing elements.</li>
+      <li>Slot gaps allows flow re-energization and pressure recovery.</li>
+    </ul>
+    <p>Working in 2D also let me iterate on the design much faster than running 3D CFD, which
+      is far more computationally expensive.</p>
+
+    <h3>2D CFD Study - Final iteration of Front & Rear Wing</h3>
+    <div class="figure-pair">
+      <figure class="figure">
+        <img class="crop-bottom" src="fw_2d_cfd.png" alt="2D CFD velocity contour of the front 
+        wing, showing the flow around the two elements and the slot gap between them">
+        <figcaption>Figure 2: Front wing 2D CFD velocity contour.</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="rw_2d_cfd.png" alt="2D CFD velocity magnitude contour of 
+        the rear wing, showing the flow around the three elements and the slot gaps between them">
+        <figcaption>Figure 3: Rear wing 2D CFD velocity contour.</figcaption>
+      </figure>
+    </div>
+    
+
+    <h2>Outcome</h2>
+    <p>What happened as a result? Include numbers or lessons learned if you can.</p>
+
+    <div class="pager">
+      <a href="index.html">← About me</a>
+      <a href="project1b.html">Wing Spar Design →</a>
+    </div>
+  </main>
+  <script src="nav.js"></script>
+</body>
+</html>
