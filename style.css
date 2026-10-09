@@ -785,3 +785,8 @@ html:has(body.framed) { scroll-padding-top: var(--nav-h); }
 .code-download:hover { background: var(--accent); color: var(--on-accent); text-decoration: none; }
 .code-body { margin: 0; padding: 14px 16px; max-height: 420px; overflow: auto; font-size: 0.78rem; line-height: 1.55; color: var(--text); tab-size: 4; }
 .code-body code { font-family: var(--mono); white-space: pre; }
+
+/* One line of space between figures and the paragraphs around them on project pages */
+main.project > .figure,
+main.project > .figure-pair { margin: 1.65em 0; }
+main.project .figure-pair > .figure { margin: 0; }
