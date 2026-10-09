@@ -9,17 +9,27 @@ document.querySelectorAll('.dropdown').forEach(function (dd) {
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') set(false); });
 });
 
+/* ---------- Sheet frames ----------
+   Every .page (index drawing sheet) gets its own border and ruler bands. */
+document.querySelectorAll('.page').forEach(function (page) {
+  var f = document.createElement('div');
+  f.className = 'page-frame local';
+  f.setAttribute('aria-hidden', 'true');
+  f.innerHTML = ['top', 'bottom', 'left', 'right'].map(function (side) {
+    return '<div class="ruler ruler-' + side + '"><div class="ruler-track"></div></div>';
+  }).join('');
+  page.insertBefore(f, page.firstChild);
+});
+
 /* ---------- Page-frame rulers ----------
    Zone width is chosen so exactly 12 zones (6 on phones) fit between the
    inner borders; the background grid is sized from the same --zone value,
    so one zone = two 5x5 grid blocks. Numbers run across the top/bottom,
-   letters down the sides; side tracks cover the viewport plus the grid's
-   parallax travel. */
+   letters down the sides; side tracks are long enough for the tallest sheet. */
 (function () {
-  var frame = document.querySelector('.page-frame');
-  if (!frame) return;
+  var frames = document.querySelectorAll('.page-frame.local');
+  if (!frames.length) return;
   var root = document.documentElement;
-  var PARALLAX = 0.25; // must match the grid's background-position factor in style.css
   var narrow = window.matchMedia('(max-width: 720px)');
 
   function letters(n) {
@@ -28,7 +38,7 @@ document.querySelectorAll('.dropdown').forEach(function (dd) {
     return s;
   }
   function fill(selector, count, label) {
-    frame.querySelectorAll(selector).forEach(function (track) {
+    document.querySelectorAll(selector).forEach(function (track) {
       var html = '';
       for (var i = 0; i < count; i++) html += '<span>' + label(i) + '</span>';
       track.innerHTML = html;
@@ -40,13 +50,74 @@ document.querySelectorAll('.dropdown').forEach(function (dd) {
     var w = root.clientWidth, h = root.clientHeight;
     var zone = (w - 2 * border) / cols;
     root.style.setProperty('--zone', zone + 'px');
-    var travel = Math.max(0, root.scrollHeight - h) * PARALLAX;
+    var span = h;
+    frames.forEach(function (f) { span = Math.max(span, f.parentElement.offsetHeight); });
     fill('.ruler-top .ruler-track, .ruler-bottom .ruler-track', cols, function (i) { return i + 1; });
-    fill('.ruler-left .ruler-track, .ruler-right .ruler-track', Math.ceil((h + travel) / zone) + 1, letters);
+    fill('.ruler-left .ruler-track, .ruler-right .ruler-track', Math.ceil(span / zone) + 1, letters);
+    track();
+  }
+  // Each sheet's grid moves 1:1 with the sheet, so its side letters are offset
+  // by how far the sheet has scrolled past its pinned border
+  function track() {
+    frames.forEach(function (f) {
+      var y = f.parentElement.getBoundingClientRect().top - f.getBoundingClientRect().top;
+      f.style.setProperty('--track-y', y + 'px');
+    });
   }
   build();
   window.addEventListener('resize', build);
   window.addEventListener('load', build);
+  window.addEventListener('scroll', track, { passive: true });
+})();
+
+/* ---------- Sheet stack pin ----------
+   Each sheet pins just below the fixed header, or once its bottom reaches the
+   bottom of the window if it is taller, so all of it, title block included,
+   is seen before the next sheet covers it. Also publishes the header height. */
+(function () {
+  var pages = document.querySelectorAll('.page');
+  if (!pages.length) return;
+  var nav = document.querySelector('nav');
+  function pin() {
+    var navH = nav ? nav.offsetHeight : 0;
+    document.documentElement.style.setProperty('--nav-h', navH + 'px');
+    var h = document.documentElement.clientHeight;
+    pages.forEach(function (p) { p.style.top = Math.min(navH, h - p.offsetHeight) + 'px'; });
+  }
+  pin();
+  window.addEventListener('resize', pin);
+  window.addEventListener('load', pin);
+})();
+
+/* ---------- In-page links on the sheet stack ----------
+   Sheets are sticky, so the browser sees a pinned sheet as already in view and
+   won't scroll to it. Work out each sheet's real place in the page instead:
+   the stack's top plus the heights (and hold margins) of the sheets before it. */
+(function () {
+  var stack = document.querySelector('.sheet-stack');
+  if (!stack) return;
+  var pages = Array.prototype.slice.call(stack.querySelectorAll('.page'));
+  var nav = document.querySelector('nav');
+
+  function pageTop(page) {
+    var y = stack.getBoundingClientRect().top + window.scrollY;
+    for (var i = 0; i < pages.length && pages[i] !== page; i++) {
+      y += pages[i].offsetHeight + parseFloat(getComputedStyle(pages[i]).marginBottom);
+    }
+    return y;
+  }
+
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest('a[href^="#"]');
+    if (!link) return;
+    var target = document.getElementById(link.getAttribute('href').slice(1));
+    var page = target && target.closest('.page');
+    if (!page) return;
+    e.preventDefault();
+    var within = target === page ? 0 : target.getBoundingClientRect().top - page.getBoundingClientRect().top;
+    var navH = nav ? nav.offsetHeight : 0;
+    window.scrollTo({ top: Math.max(0, pageTop(page) + within - navH) });
+  });
 })();
 
 /* ---------- Scroll motion ---------- */
@@ -82,11 +153,12 @@ document.querySelectorAll('.dropdown').forEach(function (dd) {
         io.unobserve(e.target);
       }
     });
-  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.1 });
+  }, { threshold: 0.1 });
   targets.forEach(function (el) { io.observe(el); });
 
   // Scroll-linked values: gear rotation, grid parallax, progress bar, timeline drawing
   var timelines = document.querySelectorAll('.timeline');
+  var pages = document.querySelectorAll('.page');
   var ticking = false;
   function update() {
     ticking = false;
@@ -99,6 +171,19 @@ document.querySelectorAll('.dropdown').forEach(function (dd) {
       var p = (window.innerHeight * 0.75 - r.top) / r.height;
       t.style.setProperty('--draw', Math.max(0, Math.min(1, p)));
     });
+    // How far each sheet has slid in over the previous one (0 = just entering, 1 = fully over).
+    // The covered sheet darkens by it; the incoming sheet starts fading in once it is
+    // a third of the way up the window and is fully opaque when it covers the whole window.
+    for (var i = 0; i < pages.length - 1; i++) {
+      var navH = nav ? nav.offsetHeight : 0;
+      var c = (pages[i + 1].getBoundingClientRect().top - navH) / (window.innerHeight - navH);
+      c = Math.max(0, Math.min(1, 1 - c));
+      pages[i].style.setProperty('--cover', c);
+      var enter = Math.max(0, (c - 1 / 3) * 1.5);
+      pages[i + 1].style.setProperty('--enter', enter);
+      // While still invisible, let clicks reach the sheet underneath
+      pages[i + 1].style.pointerEvents = enter === 0 ? 'none' : '';
+    }
   }
   window.addEventListener('scroll', function () {
     if (!ticking) { ticking = true; requestAnimationFrame(update); }

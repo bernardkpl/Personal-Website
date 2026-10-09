@@ -7,14 +7,6 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="framed">
-  <!-- Drawing-sheet border: rulers aligned to the background grid (zones filled in by nav.js) -->
-  <div class="page-frame" aria-hidden="true">
-    <div class="ruler ruler-top"><div class="ruler-track"></div></div>
-    <div class="ruler ruler-bottom"><div class="ruler-track"></div></div>
-    <div class="ruler ruler-left"><div class="ruler-track"></div></div>
-    <div class="ruler ruler-right"><div class="ruler-track"></div></div>
-  </div>
-
   <nav>
     <a class="logo" href="index.html">Bernard Lui's Engineering Portfolio</a>
     <ul>
@@ -32,7 +24,11 @@
     </ul>
   </nav>
 
-  <section class="slide">
+  <!-- Sheet stack: each drawing sheet is a full page that pins in place while the
+       next one slides up over it. nav.js adds each sheet's border and rulers. -->
+  <div class="sheet-stack">
+  <section class="page page-hero" id="sheet-1">
+    <div class="page-body page-body-hero">
     <div class="sheet">
       <div class="sheet-body">
         <div class="view">
@@ -43,8 +39,9 @@
         <div class="notes">
           <p class="notes-head">Notes:</p>
           <ol>
+            <li>Fourth year student at UC San Diego Studying Aerospace Engineering, previously interned at Telsa Motors as a 
+              Safety Mechanical Design Engineer. Interested in control systems and robotics, thermofluids analysis, and product design.</li>
             <li>Scroll for coursework, skills, experience and projects.</li>
-            <li>Resume available from the title block below.</li>
           </ol>
         </div>
 
@@ -70,7 +67,7 @@
             <a class="tb-value" href="www.linkedin.com/in/bernard-kpl" target="_blank" rel="noopener">Profile ↗</a>
           </div>
           <div class="tb-cell">
-            <span class="tb-label">Dwg No.</span>
+            <span class="tb-label">Part No.</span>
             <span class="tb-value">BL-001</span>
           </div>
           <div class="tb-cell">
@@ -83,7 +80,7 @@
           </div>
           <div class="tb-cell">
             <span class="tb-label">Sheet</span>
-            <span class="tb-value">1 of 1</span>
+            <span class="tb-value">1 of 4</span>
           </div>
           <a class="tb-cell tb-half tb-action primary" href="#projects">
             <span class="tb-label">Projects</span>
@@ -96,7 +93,11 @@
         </div>
       </div>
     </div>
+    </div>
   </section>
+
+  <section class="page" id="sheet-2">
+    <div class="page-body">
 
   <section class="section" id="coursework">
     <div class="section-inner">
@@ -164,6 +165,41 @@
     </div>
   </section>
 
+    </div>
+    <a class="tb-cell tb-action page-top" href="#sheet-1">
+      <span class="tb-value">Back to Top ↑</span>
+    </a>
+    <div class="title-block page-tb">
+      <div class="tb-cell tb-name">
+        <span class="tb-label">Title</span>
+        <p class="tb-title">Coursework &amp; Skills</p>
+      </div>
+      <div class="tb-cell tb-full">
+        <span class="tb-label">Drawn by</span>
+        <span class="tb-value">Bernard Lui</span>
+      </div>
+      <div class="tb-cell">
+        <span class="tb-label">Part No.</span>
+        <span class="tb-value">BL-001</span>
+      </div>
+      <div class="tb-cell">
+        <span class="tb-label">Rev</span>
+        <span class="tb-value">A.1</span>
+      </div>
+      <div class="tb-cell">
+        <span class="tb-label">Scale</span>
+        <span class="tb-value">1:1</span>
+      </div>
+      <div class="tb-cell">
+        <span class="tb-label">Sheet</span>
+        <span class="tb-value">2 of 4</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="sheet-3">
+    <div class="page-body">
+
   <section class="section" id="experience">
     <div class="section-inner">
       <h2>Work Experience</h2>
@@ -217,6 +253,41 @@
     </div>
   </section>
 
+    </div>
+    <a class="tb-cell tb-action page-top" href="#sheet-1">
+      <span class="tb-value">Back to Top ↑</span>
+    </a>
+    <div class="title-block page-tb">
+      <div class="tb-cell tb-name">
+        <span class="tb-label">Title</span>
+        <p class="tb-title">Work Experience</p>
+      </div>
+      <div class="tb-cell tb-full">
+        <span class="tb-label">Drawn by</span>
+        <span class="tb-value">Bernard Lui</span>
+      </div>
+      <div class="tb-cell">
+        <span class="tb-label">Part No.</span>
+        <span class="tb-value">BL-001</span>
+      </div>
+      <div class="tb-cell">
+        <span class="tb-label">Rev</span>
+        <span class="tb-value">A.1</span>
+      </div>
+      <div class="tb-cell">
+        <span class="tb-label">Scale</span>
+        <span class="tb-value">1:1</span>
+      </div>
+      <div class="tb-cell">
+        <span class="tb-label">Sheet</span>
+        <span class="tb-value">3 of 4</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="sheet-4">
+    <div class="page-body">
+
   <section class="section" id="projects">
     <div class="section-inner">
       <h2>Featured Projects</h2>
@@ -248,6 +319,40 @@
       </div>
     </div>
   </section>
+
+    </div>
+    <a class="tb-cell tb-action page-top" href="#sheet-1">
+      <span class="tb-value">Back to Top ↑</span>
+    </a>
+    <div class="title-block page-tb">
+      <div class="tb-cell tb-name">
+        <span class="tb-label">Title</span>
+        <p class="tb-title">Featured Projects</p>
+      </div>
+      <div class="tb-cell tb-full">
+        <span class="tb-label">Drawn by</span>
+        <span class="tb-value">Bernard Lui</span>
+      </div>
+      <div class="tb-cell">
+        <span class="tb-label">Part No.</span>
+        <span class="tb-value">BL-001</span>
+      </div>
+      <div class="tb-cell">
+        <span class="tb-label">Rev</span>
+        <span class="tb-value">A.1</span>
+      </div>
+      <div class="tb-cell">
+        <span class="tb-label">Scale</span>
+        <span class="tb-value">1:1</span>
+      </div>
+      <div class="tb-cell">
+        <span class="tb-label">Sheet</span>
+        <span class="tb-value">4 of 4</span>
+      </div>
+    </div>
+  </section>
+  </div>
+
   <script src="nav.js"></script>
 </body>
 </html>

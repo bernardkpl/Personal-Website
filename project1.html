@@ -109,9 +109,55 @@
       </figure>
     </div>
     
+    <h2>3D CFD Study</h2>
+    <p>I used 3D CFD to validate the final design and ensure that the aerodynamic performance targets were met at 
+      our designed operating speeds of 15m/s. 
+      The 3D CFD study allowed me to analyze the flow behavior around the entire wing assembly, 
+      including the effects of wingtip vortices and interactions between the front and rear wings and the car chassis
+      as well.
+    </p>
+
+    <div class="figure-pair">
+      <figure class="figure">
+        <img src="3d_cfd_setup.png" alt="ANSYS 3D CFD setup: the wing geometry placed inside the computational domain">
+        <figcaption>Figure 4: 3D CFD setup — wing geometry inside the computational domain.</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="3d_cfd_streamline.png" alt="3D CFD pathlines around the wing and endplate, coloured by particle time">
+        <figcaption>Figure 5: 3D CFD pathlines around the wing, coloured by particle time.</figcaption>
+      </figure>
+    </div>
+
+
+    <h3>Turbulence Models</h3>
+    <p>Different conditions require different turbulence models. k-epsilon is stable in free-stream flow but needs wall functions 
+      near walls, while k-omega SST resolves the viscous sublayer more accurately at the cost of a finer near-wall mesh. 
+      Rather than assume k-omega SST was best, I hand-calculated the expected lift and drag coefficients of our 3D wings 
+      from airfoiltools.com data and basic aerodynamic equations, then compared them against 3D CFD runs with each turbulence 
+      model to pick the most accurate one for our design.</p>
+
+    <figure class="figure narrow">
+      <img src="coeff_hand_calcs.png" alt="Handwritten S1223 hand calculation: 3D lift coefficient from the 2D lift slope and aspect ratio (CL about 0.5472), and 3D drag coefficient from induced drag (CD about 0.1492)">
+      <figcaption>Figure 6: Hand calculation of the S1223's 3D lift and drag coefficients from 2D XFoil data.</figcaption>
+    </figure>
+
+    <figure class="figure">
+      <img src="turbulence_model.png" alt="Table comparing CL and CD for the Selig 1223 test case (Re 200,000, 15 m/s, 10 degrees AoA) from AirfoilTools, hand calculation, k-omega GEKO, k-omega SST and k-epsilon with enhanced wall treatment">
+      <figcaption>Figure 7: Turbulence model comparison — S1223 test case (Re = 200,000, 15 m/s, 10° AoA).</figcaption>
+    </figure>
+
+    <h3>Grid Independence Study</h3>
+    <p>By conducting a grid independence study, I ensured that the results were not influenced by the mesh size. 
+      The final mesh was chosen based on a balance between accuracy and computational efficiency.
+    </p>
+
+    <figure class="figure">
+      <img src="grid_indepedence.png" alt="Grid independence table for four meshes from coarsest to finest, listing surface and volume mesh sizes, boundary layers, orthogonality, compute time and CL, with mesh 3 highlighted">
+      <figcaption>Figure 8: Grid independence study — four meshes from coarsest to finest; mesh 3 (highlighted) was selected.</figcaption>
+    </figure>
 
     <h2>Outcome</h2>
-    <p>What happened as a result? Include numbers or lessons learned if you can.</p>
+    <p>I sucessfully designed a aerodynamic package for TR-26, with a 10% improvement in aerodynamic efficiency</p>
 
     <div class="pager">
       <a href="index.html">← About me</a>
