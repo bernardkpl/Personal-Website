@@ -681,9 +681,8 @@ html:has(body.framed) { scroll-padding-top: var(--nav-h); }
 }
 .page + .page { box-shadow: 0 -24px 48px -8px rgba(0, 0, 0, 0.55); }
 
-/* Hold: after a sheet is fully in view it stays pinned for this much
-   scrolling before the next sheet starts to come up */
-.page:not(:last-child) { margin-bottom: 75vh; }
+/* No hold: the next sheet starts to come up as soon as this one is fully in view */
+.page:not(:last-child) { margin-bottom: 0; }
 
 /* Each sheet fades in as it slides up (nav.js sets --enter 0..1) */
 @media (prefers-reduced-motion: no-preference) {
@@ -775,3 +774,14 @@ html:has(body.framed) { scroll-padding-top: var(--nav-h); }
 
 /* Tall portrait figures (e.g. scanned hand calcs): cap the width so they don't fill several screens */
 .figure.narrow img { max-width: 560px; margin: 0 auto; }
+
+/* Code window (scrollable file viewer with a download link) */
+.code-window { margin: 20px 0 8px; border: 1px solid var(--line); background: var(--surface); box-shadow: 4px 4px 0 var(--border); }
+.code-bar { display: flex; align-items: center; gap: 12px; padding: 8px 12px; border-bottom: 1px solid var(--line); background: var(--bg); }
+.code-dots { display: flex; gap: 6px; }
+.code-dots i { width: 10px; height: 10px; border-radius: 50%; border: 1px solid var(--line); }
+.code-name { flex: 1; font-size: 0.8rem; font-weight: 600; color: var(--text); }
+.code-download { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; border: 1px solid var(--accent); padding: 2px 10px; }
+.code-download:hover { background: var(--accent); color: var(--on-accent); text-decoration: none; }
+.code-body { margin: 0; padding: 14px 16px; max-height: 420px; overflow: auto; font-size: 0.78rem; line-height: 1.55; color: var(--text); tab-size: 4; }
+.code-body code { font-family: var(--mono); white-space: pre; }

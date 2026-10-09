@@ -118,6 +118,60 @@ document.querySelectorAll('.page').forEach(function (page) {
     var navH = nav ? nav.offsetHeight : 0;
     window.scrollTo({ top: Math.max(0, pageTop(page) + within - navH) });
   });
+
+  /* Snap: if scrolling stops while one sheet is sliding over another, ease to
+     whichever sheet is closer, so you never rest half-way between two pages.
+     Snaps land on the top of a sheet (just under the header). Scrolling inside
+     a sheet, including a tall one, never snaps: only the stretch where the next
+     sheet is sliding in, from one window-height before its top, does. */
+  var timer, raf, animating = false;
+  var root = document.documentElement;
+
+  // Quick spring to y: fast ease-out that overshoots slightly, then settles
+  function springTo(target) {
+    var from = window.scrollY, dist = target - from, t0 = null, dur = 500;
+    var max = root.scrollHeight - root.clientHeight;
+    animating = true;
+    root.style.scrollBehavior = 'auto';       // we drive the motion ourselves
+    function stop() {
+      animating = false;
+      root.style.scrollBehavior = '';
+      ['wheel', 'touchstart', 'keydown'].forEach(function (ev) { window.removeEventListener(ev, cancel); });
+    }
+    function cancel() { cancelAnimationFrame(raf); stop(); }
+    ['wheel', 'touchstart', 'keydown'].forEach(function (ev) { window.addEventListener(ev, cancel, { passive: true }); });
+    function frame(now) {
+      if (t0 === null) t0 = now;
+      var p = Math.min(1, (now - t0) / dur), c1 = 0.6;
+      var e = 1 + (c1 + 1) * Math.pow(p - 1, 3) + c1 * Math.pow(p - 1, 2);   // easeOutBack
+      window.scrollTo(0, Math.max(0, Math.min(max, from + dist * e)));
+      if (p < 1) raf = requestAnimationFrame(frame);
+      else stop();
+    }
+    raf = requestAnimationFrame(frame);
+  }
+
+  function snap() {
+    if (animating) return;
+    var navH = nav ? nav.offsetHeight : 0;
+    var h = root.clientHeight;
+    var y = window.scrollY;
+    for (var i = 1; i < pages.length; i++) {
+      var end = pageTop(pages[i]) - navH;     // top of sheet i, just under the header
+      var start = pageTop(pages[i]) - h;      // sheet i just peeking in
+      if (y > start + 1 && y < end - 1) {
+        var target = y - start < end - y ? start : end;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) window.scrollTo(0, target);
+        else springTo(target);
+        return;
+      }
+    }
+  }
+  window.addEventListener('scroll', function () {
+    if (animating) return;
+    clearTimeout(timer);
+    timer = setTimeout(snap, 150);
+  }, { passive: true });
 })();
 
 /* ---------- Scroll motion ---------- */
